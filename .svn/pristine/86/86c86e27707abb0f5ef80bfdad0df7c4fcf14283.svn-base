@@ -1,0 +1,71 @@
+{% extends "scripts_page.html" %}
+
+{% block index_header_extra %}
+    <style type="text/css">
+        #errorstableGridContainer{height:80%; width: 100%;}
+    </style>
+    <script type="text/javascript">
+        dojo.require("dijit.TitlePane")
+        dojo.require("dijit.form.Button");
+    </script>
+    {% load datable_tags %}
+    {% load  kioskApp_tags%}
+    {% block bridesAppTags %}
+        {% tableButtonFunc %}
+    {% endblock %}
+    {% datable_init %}
+    {% block projects_page_header_extra %}{% endblock %}
+{% endblock %}
+
+{% block breadcrumb %}
+    {{ block.super }} &raquo; <a href="/robot_scripts_page/{{ script.id }}">{{ script.type }}</a>
+{% endblock %}
+{% block maincenter%}
+    <form enctype="multipart/form-data"  action="" method="post"  >{% csrf_token %}
+        <table>{{ form.as_table }}</table>
+        <input type="submit" value="Submit" />
+    </form>
+    <script type="text/javascript">
+        function searchDescription(){
+            var textbox =  dijit.byId('w_errorstable_description');
+            datable_changed('errorstable', 'description', textbox.value);
+        }
+        function refresh1(){
+            errorstableGrid_clearAllFilters();
+            errorstableRefresh();
+        }
+    </script>
+    <table>
+    <tr>
+
+    </tr>
+        <tr>
+            <td>
+                <p>Search: {% datable_widget errorstable  description %}</p>
+            </td>
+            <td>
+                <button dojoType="dijit.form.Button" id="button2"  onClick="searchDescription()">
+                    search description
+                </button>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <p>Search: {% datable_widget errorstable  date %}</p>
+            </td>
+            <td>
+                <button dojoType="dijit.form.Button" id="button3"  onClick=" refresh1()">
+                    רענן טבלא
+                </button>
+            </td>
+        </tr>
+    </table>
+    {% datable errorstable%}
+    <div id="errorstableGridContainer"></div>
+    <p>
+        {% datable_refresh_button errorstable %}
+        {% datable_xls_button errorstable %}
+        {% datable_csv_button errorstable %}
+    </p>
+
+{% endblock %}

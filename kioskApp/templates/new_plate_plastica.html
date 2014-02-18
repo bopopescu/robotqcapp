@@ -1,0 +1,94 @@
+{% extends "robotQCIndex.html" %}
+
+{% block index_header_extra %}
+
+    <style type="text/css">
+        #planningDialog {width: 300px; height: 350px}
+        #planningDialog_underlay { background-color:Grey; }
+        #planningDialogTabContainer{width: 250px; height: 300px;}
+        #planningDialogPlanningProgress{width: 250px; height: 300px;}
+        #planningDialogPlanningDetails{width: 250px; height: 300px;}
+        #downloadProgress{width:200px}
+        #planningDetails{width: 240px; height: 290px;}
+        .loader {
+            text-align: center;
+        }
+        .loader span {
+            display: inline-block;
+            vertical-align: middle;
+            width: 10px;
+            height: 10px;
+            margin: 50px auto;
+            background: black;
+            border-radius: 50px;
+            -webkit-animation: loader 0.9s infinite alternate;
+            -moz-animation: loader 0.9s infinite alternate;
+        }
+        .loader span:nth-of-type(2) {
+            -webkit-animation-delay: 0.3s;
+            -moz-animation-delay: 0.3s;
+        }
+        .loader span:nth-of-type(3) {
+            -webkit-animation-delay: 0.6s;
+            -moz-animation-delay: 0.6s;
+        }
+        @-webkit-keyframes loader {
+            0% {
+                width: 10px;
+                height: 10px;
+                opacity: 0.9;
+                -webkit-transform: translateY(0);
+            }
+            100% {
+                width: 24px;
+                height: 24px;
+                opacity: 0.1;
+                -webkit-transform: translateY(-21px);
+            }
+        }
+        @-moz-keyframes loader {
+            0% {
+                width: 10px;
+                height: 10px;
+                opacity: 0.9;
+                -moz-transform: translateY(0);
+            }
+            100% {
+                width: 24px;
+                height: 24px;
+                opacity: 0.1;
+                -moz-transform: translateY(-21px);
+            }
+        }
+    </style>
+    <script type="text/javascript">
+        dojo.require("dijit.TitlePane")
+        dojo.require("dijit.form.Button");
+        dojo.require("dijit.form.NumberTextBox");
+        dojo.require("dijit.form.DateTextBox");
+        //dojo.require("dijit.form..TimeTextBox");
+        dojo.require("dijit.form.Textarea");
+        dojo.require("dijit.form.Select");
+        dojo.require("dojox.form.FileInput");
+        dojo.require("dijit.ProgressBar");
+        dojo.require("dijit.Dialog");
+        dojo.require("dojo.parser");
+        dojo.require("dijit.form.TextBox");
+    </script>
+    {% load  kioskApp_tags%}
+    {% block kioskAppTags %}
+    {% endblock %}
+    {% block new_project_header_extra %}{% endblock %}
+{% endblock %}
+{% block breadcrumb %}
+    {{ block.super }} &raquo; <a href="/new_plate_plastica/">new plate plastica</a>
+{% endblock %}
+{% block maincenter%}
+    <form enctype="multipart/form-data"  action="" method="post" >{% csrf_token %}
+        <table>{{ form.as_table }}</table>
+        <input type="submit" value="Submit" />
+    </form>
+    {% if  is_post  and is_valid  %}
+        <p>your form has been successfully submitted</p>
+    {% endif %}
+{% endblock %}

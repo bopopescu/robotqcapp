@@ -1,0 +1,3 @@
+C:\Users\ehud\Desktop\code\robotQC>python "C:\Program Files (x86)\Google\google_appengine\remote_api_shell.py" -s robotqcapp.appspot.com
+import os
+os.environ['DJANGO_SETTINGS_MODULE'] = "settings"

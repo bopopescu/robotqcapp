@@ -1,0 +1,96 @@
+{% extends "robotQCIndex.html" %}
+
+{% block index_header_extra %}
+    <style type="text/css">
+        #scriptstableGridContainer{height:80%; width: 100%;}
+    </style>
+    <script type="text/javascript">
+        dojo.require("dijit.TitlePane")
+        dojo.require("dijit.form.Button");
+    </script>
+    {% load datable_tags %}
+    {% load  kioskApp_tags%}
+    {% block bridesAppTags %}
+        {% tableButtonFunc %}
+    {% endblock %}
+    {% datable_init %}
+    {% block projects_page_header_extra %}{% endblock %}
+{% endblock %}
+
+{% block breadcrumb %}
+    {{ block.super }} &raquo; <a href="/robot_scripts_page/">scripts</a>
+{% endblock %}
+{% load filetransfers %}
+
+{% block maincenter%}
+    <button data-dojo-type="dijit.form.Button" type="button" id="button0"k>scripts reports
+        <script type="dojo/connect" data-dojo-event="onClick"> window.location = "/robot_scripts_page/scripts_report/"</script>
+    </button>
+    <form action="{{ upload_url }}" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {% render_upload_data upload_data %}
+        <table>{{ form }}</table>
+        <input type="submit" value="Upload" />
+    </form>
+    <script type="text/javascript">
+        function searchType(){
+            var textbox =  dijit.byId('w_scriptstable_type');
+            datable_changed('scriptstable', 'type', textbox.value);
+        }
+        function searchDescription(){
+            var textbox =  dijit.byId('w_scriptstable_script_description');
+            datable_changed('scriptstable', 'script_description', textbox.value);
+        }
+        function refresh1(){
+            scriptstableGrid_clearAllFilters();
+            scriptstableRefresh();
+        }
+    </script>
+    <table>
+        <tr>
+      <td>
+
+      </td>
+        </tr>
+        <tr>
+            <td>
+                <p>Search: {% datable_widget scriptstable  type %}</p>
+            </td>
+            <td>
+                <button dojoType="dijit.form.Button" id="button1"  onClick="searchType()">
+                    search type
+                </button>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <p>Search: {% datable_widget scriptstable  script_description %}</p>
+            </td>
+            <td>
+                <button dojoType="dijit.form.Button" id="button2"  onClick="searchDescription()">
+                    search description
+                </button>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <p>Search: {% datable_widget scriptstable  script_date %}</p>
+            </td>
+            <td>
+                <button dojoType="dijit.form.Button" id="button3"  onClick=" refresh1()">
+                    רענן טבלא
+                </button>
+            </td>
+        </tr>
+
+    </table>
+    {% datable scriptstable%}
+    <div id="scriptstableGridContainer"></div>
+    <p>
+        {% datable_refresh_button scriptstable %}
+        {% datable_xls_button scriptstable %}
+        {% datable_csv_button scriptstable %}
+
+    </p>
+
+{% endblock %}

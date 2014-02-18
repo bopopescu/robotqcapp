@@ -1,0 +1,3 @@
+import remote_api_shell
+
+remote_api_shell

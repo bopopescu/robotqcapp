@@ -1,0 +1,31 @@
+{% extends "robotQCIndex.html" %}
+{% block index_header_extra %}
+    {% load  kioskApp_tags%}
+    {% block TamuzAppTags %}
+    {% endblock %}
+    <script type="text/javascript">
+    dojo.require("dijit.form.NumberTextBox");
+    dojo.require("dijit.form.ValidationTextBox");
+    dojo.require("dijit.form.Textarea");
+    dojo.require("dijit.form.DateTextBox");
+    dojo.require("dijit.form.Select");
+    dojo.require("dojox.form.FileInput");
+    dojo.require("dijit.ProgressBar");
+    dojo.require("dijit.Dialog");
+    dojo.require("dojo.parser");
+    </script>
+{% endblock %}
+{% block breadcrumb %}
+    {{ block.super }} &raquo; <a href="/new_user/">הרשמה</a>
+{% endblock %}
+{% block maincenter%}
+    <form enctype="multipart/form-data"  action="" method="post"  >
+        <table>{{ form.as_table }}</table>
+        <input type="submit" value="Submit" />
+    </form>
+    {% if  is_post  %}
+        <p> {{ message }} </p>
+    {% endif %}
+    <div>
+    </div>
+{% endblock %}

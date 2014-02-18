@@ -1,0 +1,112 @@
+{% extends "dojango/base.html" %}
+
+{# setting the head attribute <title> #}
+{% block dojango_page_title %}{% endblock %}
+
+{# used to set some additional djConfig definitions (<script type="text/javascript">djConfig['isDebug'] = false;</script>) #}
+{% block dojango_post_dj_config %}
+    <script>
+        djConfig.parseOnLoad = true;
+    </script>
+{% endblock %}
+
+{# add your own javascript/css stuff here #}
+{% block dojango_header_extra %}
+    <style type="text/css">
+        @import "{{ DOJANGO.DOJO_URL }}/resources/dojo.css";
+        @import "{{ DOJANGO.THEME_CSS_URL }}";
+        html, body { height: 100%; width: 100%; padding: 0; border: 0; }
+        #main { height: 100%; width: 100%; padding: 0; border: 0; }
+        #main_top {height: 100px; width: 70% }
+        #main_top_bc {width: 100%; height: 100px}
+        #title {width: 70%;}
+        #quickaccess {width: 30%;}
+        #main_top { margin-left: 10px; margin-right: 10px; margin-top: 10px; }
+        #breadcrumbs_region {margin-left: 10px; margin-right: 10px; height: 12px}
+        #breadcrumbs {min-height: 7px; margin-top: 0px; margin-bottom: 0px; padding: 0;vertical-align: middle;}
+        #mainSplit { margin-left: 10px; margin-right: 10px;}
+        #main_center { margin-left: 1px; margin-right: 1px;}
+        #leftAccordion { width: 15%; }
+        #main .dijitSplitterH { height: 7px }
+        #main .dijitSplitterV { width: 7px }
+        .righttitle {font-family: Calibri;}
+        .righttitlel {font-family: Calibri;font-size: large;}
+
+        span.allbutton .dijitButton {
+            width:97%;
+        }
+        span.allbutton .dijitButtonNode {
+            width:97%;
+            margin:3px 0px 0px -2px;
+            line-height:30px;
+        }
+
+    </style>
+    <style type="text/css">
+
+        input.largerCheckbox
+        {
+            width: 30px;
+            height: 30px;
+        }
+
+    </style>
+    <script type="text/javascript">
+        dojo.require("dijit.layout.BorderContainer");
+        dojo.require("dijit.layout.ContentPane");
+        dojo.require("dijit.layout.AccordionContainer");
+        dojo.require("dijit.layout.TabContainer");
+        dojo.require("dijit.form.ValidationTextBox");
+        dojo.require("dijit.form.Select");
+        dojo.require("dijit.form.NumberTextBox");
+        dojo.require("dijit.form.Textarea");
+        dojo.require("dijit.form.DateTextBox");
+        dojo.require("dijit.form.TimeTextBox");
+        dojo.require("dojox.form.FileInput");
+        dojo.require("dijit.ProgressBar");
+        dojo.require("dijit.Dialog");
+        dojo.require("dojo.parser");
+    </script>
+    {% block base_header_extra %}{% endblock %}
+{% endblock %}
+
+{% block dojango_content %}
+    <div id="main" dojoType="dijit.layout.BorderContainer">
+        <!-- "mainTop"  contains the title and quick access bar -->
+        <div id="main_top" dojoType="dijit.layout.ContentPane" region="top">
+            <div id="main_top_bc" data-dojo-type="dijit.layout.BorderContainer" data-dojo-props='persist:true, gutters:false'>
+                <!-- Title -->
+                <div id="title" data-dojo-type="dijit.layout.ContentPane" data-dojo-props='region:"leading", splitter:true'>
+
+                </div>
+                <!-- Quick Access -->
+                    <div id="quickaccess" data-dojo-type="dijit.layout.ContentPane" data-dojo-props='region:"center"'>
+                        {% block quickaccess %}
+                            <img src="/download/25001" width="100%">
+                        {% endblock %}
+                    </div>
+                </div>
+            </div>
+            <div id="breadcrumbs_region" dojoType="dijit.layout.ContentPane" region="top">
+                <!--Breadcrumbs-->
+                <div id="breadcrumbs">
+                    {% block breadcrumb %}<a href="/">Home</a>{% endblock %}
+                </div>
+            </div>
+            <!-- "mainSplit" has all the real content -->
+            <div dojoType="dijit.layout.BorderContainer" liveSplitters="false" design="sidebar" region="center" id="mainSplit">
+                <div dojoType="dijit.layout.AccordionContainer" duration="200" minSize="20" id="leftAccordion" region="leading" splitter="true">
+                    {% block accordion %}
+                    {% endblock %}
+                </div>
+                <!-- end AccordionContainer -->
+
+                <!-- top tabs (marked as "center" to take up the main part of the BorderContainer) -->
+                <div dojoType="dijit.layout.ContentPane" region="center" id="main_center">
+                    {% block maincenter %}
+                    {% endblock %}
+                </div><!-- end of region="center"  -->
+            </div> <!-- end of "mainSplit" BorderContainer -->
+        </div> <!-- end of "main" BorderContainer -->
+    </div>
+{% endblock %}

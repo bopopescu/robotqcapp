@@ -1,0 +1,141 @@
+{% extends "experiments_page.html" %}
+
+{% block index_header_extra %}
+    <style type="text/css" xmlns="http://www.w3.org/1999/html">
+        #center {height: 200px;}
+        #center_bc {width: 100%; height: 100px}
+        #upper_center {height: 50%;}
+        #lower_center {height: 50%;}
+    </style>
+    <script type="text/javascript">
+        dojo.require("dijit.form.Form");
+        dojo.require("dijit.form.Select");
+        dojo.require("dijit.form.TimeTextBox");
+        dojo.require("dojox.form.FileInput");
+        dojo.require("dijit.form.DateTextBox");
+        dojo.require("dijit.form.CheckBox");
+        dojo.require("dijit.Dialog");
+        function downloadFiles(){
+            var downloadExperimentFiles = dijit.byId("_downloadExperimentFiles");
+            dojo.connect(downloadExperimentFiles, "onClick", function(event){
+                var xhrArgs = {
+                    url:"download_exp_files/",
+                    handleAs: "json",
+                    content:{'exp_id':'{{ exp_id }}'},
+                    load:function(response, ioArgs){
+                        if (response.success){
+                            for(var key in response){
+                                var attrName = key;
+                                if (attrName == 'zip')
+                                {
+                                    var attrValue = response[key];
+                                    var path =  attrValue;
+                                    window.location.href = path;
+                                }
+                            }
+                            console.log("Submitted successfully");
+                        } else {
+                            console.log("Error: "+response.error);
+                        }
+                    },
+                    error:function(data){ // This happens on a 500 error or alikes.
+                        dojo.byId("info").innerHTML = "Error sending data.";
+                    }
+                }
+                // Call the asynchronous xhrPost
+                var deferred = dojo.xhrPost(xhrArgs);
+            });};
+        dojo.ready(downloadFiles);
+    </script>
+
+{% block project_page_header_extra %}
+{% endblock %}
+{% endblock %}
+
+{% block breadcrumb %}
+    {{ block.super }} &raquo; <a href="/experiments/{{ exp_id }}">{{ exp.name }}</a>
+{% endblock %}
+
+{% block maincenter%}
+    {% if not   comesFromNewExperiment  and exp.blobkeyForLiquidClassInstance  %}
+     {% load filetransfers %}
+    <form action="{{ upload_url }}" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {% render_upload_data upload_data %}
+    <table>{{ uploadFormForLiquidClasses }}</table>
+        <p>C:\Program Files\Tecan\EVOware\database\CustomLCs.XML</p>
+    <input type="submit" value="Upload liquid classes file" />
+    </form>
+    </p>
+    {% endif %}
+    <button data-dojo-type="dijit.form.Button" type="button" id="button1"k>download experiment  files
+        <script type="dojo/connect" data-dojo-event="onClick"> window.location = "/experiments/download_exp_files/{{ exp_id }}"</script>
+    </button>
+
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+        google.load("visualization", "1", {packages:["corechart"]});
+        google.setOnLoadCallback(drawChart);
+        {% autoescape off %}
+            function drawChart() {
+            var data = google.visualization.arrayToDataTable(//data for cv and means
+                {{ pipetorsCV }}
+            );
+
+                var dilsList = google.visualization.arrayToDataTable(//data for real pipeting values
+                {{ dilsList }}
+        );
+            var dilsListForLineChart = google.visualization.arrayToDataTable(//data for drawing lines
+                    {{ dilsListForLineChart }}
+            );
+
+{% endautoescape %}
+            var options = {
+                title: 'pipetors cv and means',
+                hAxis: {title: 'tips', titleTextStyle: {color: 'black'}},
+                vAxis:{title: 'volume and cv', titleTextStyle: {color: 'black'}}
+            };
+            var chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
+            chart.draw(data, options);
+        ////////////////////////////////////////////////////////////////////////////////////////
+          //drawing the real pipeting values
+        dilsList.addColumn('number', 'Threshold');
+        dilsList.addRow([0,null ,{{ exp.volume }}]);
+        dilsList.addRow([{{ exp.numOfPipetors }},null ,{{ exp.volume }}]);
+          var scatterChartoptions = {
+            title: 'pipeting values of each tips over the wells',
+            hAxis: {title: 'tips', titleTextStyle: {color: 'black'}},
+            vAxis: {title: 'volume', titleTextStyle: {color: 'black'}},
+              series: [{},
+                  // Force the 2nd serie to be a simple line, w/o interactivity.
+                  {enableInteractivity: "false", pointSize: 0, lineWidth: 2, visibleInLegend: "false"}]
+        };
+            var scatterchart = new google.visualization.ScatterChart(document.getElementById('scatter_chart_div'));
+            scatterchart.draw(dilsList,scatterChartoptions);
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
+        var lineChartOptions = {
+            title: 'pipeting values per well of each pipetor',
+            hAxis: {title: 'wells ', titleTextStyle: {color: 'black'}},
+            vAxis: {title: 'volume ', titleTextStyle: {color: 'black'}}
+        };
+        var linerchart = new google.visualization.LineChart(document.getElementById('line_chart_div'));
+        linerchart.draw(dilsListForLineChart,lineChartOptions)
+
+        };
+
+    </script>
+    <div id="form_div" style="width: 900px; height: 500px;">        <!-- Project details form -->
+        <form enctype="multipart/form-data"  action="" method="post" >{% csrf_token %}
+            <table>{{ form.as_table }}</table>
+            <input type="submit" value="Submit" />
+        </form>
+    </div>
+    <div id="chart_div" style="width: 900px; height: 500px;"></div>
+    <div id="scatter_chart_div" style="width: 900px; height: 500px;"></div>
+    <div id="line_chart_div" style="width: 900px; height: 500px;"></div>
+
+    {% if   is_valid  %}
+        <p>your form has been successfully submitted</p>
+    {% endif %}
+{% endblock %}

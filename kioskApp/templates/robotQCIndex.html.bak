@@ -1,0 +1,74 @@
+
+{% extends "test.html" %}
+
+{% block base_header_extra %}
+
+    {% block index_header_extra %}
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    {% endblock %}
+
+{% endblock %}
+{% block maincenter %}
+    <!-- User details form -->
+     <p>
+
+    </p>
+    <p>
+    {% if message %}
+        {{ message }}
+    {% endif %}
+    </p>
+    {% if user  and user.is_active %}
+        <p> ברוך הבא</p>
+        <p>{{ user.username }}!</p>
+    {% else %}
+        <form enctype="multipart/form-data"  action="/" method="post"  >{% csrf_token %}
+            <table>{{ form.as_table }}</table>
+            <input type="submit" value="Submit" />
+        </form>
+    {% endif %}
+
+    <button dojoType="dijit.form.Button" id="button1"  onClick="location.href='/logout/'">logout
+    </button>
+    <button data-dojo-type="dijit.form.Button" type="button" id="button2"k>new experiment
+            <script type="dojo/connect" data-dojo-event="onClick"> window.location = "/new_experiment/"</script>
+        </button>
+        <button data-dojo-type="dijit.form.Button" type="button" id="button3"k>experiments page
+            <script type="dojo/connect" data-dojo-event="onClick"> window.location = "/experiments/"</script>
+        </button>
+        <button data-dojo-type="dijit.form.Button" type="button" id="button4"k>new plate plastica
+            <script type="dojo/connect" data-dojo-event="onClick"> window.location = "/new_plate_plastica/"</script>
+        </button>
+         <button data-dojo-type="dijit.form.Button" type="button" id="button5"k>new user
+            <script type="dojo/connect" data-dojo-event="onClick"> window.location = "/new_user/"</script>
+        </button>
+    <button data-dojo-type="dijit.form.Button" type="button" id="button6"k>go to robot scripts page
+        <script type="dojo/connect" data-dojo-event="onClick"> window.location = "/robot_scripts_page/"</script>
+    </button>
+    <button data-dojo-type="dijit.form.Button" type="button" id="button7"k>tutorial
+        <script type="dojo/connect" data-dojo-event="onClick"> window.location = "/tutorial/"</script>
+    </button>
+    <button data-dojo-type="dijit.form.Button" type="button" id="button8"k>plate
+        <script type="dojo/connect" data-dojo-event="onClick"> window.location = "/plate/"</script>
+    </button>
+{% if  not user.is_authenticated %}
+    <script  type="text/javascript">
+    var mybuttens = new Array();
+     mybuttens[0] = dojo.byId("button1");
+    mybuttens[1] = dojo.byId("button2");
+    mybuttens[2] = dojo.byId("button3");
+    mybuttens[3] = dojo.byId("button4");
+    for (var i=0;i<mybuttens.length;i++)
+    {
+        mybuttens[i].disabled="disabled";
+    }
+    </script>
+    {% endif %}
+    <script type="text/javascript">
+    //forgotPasswordButton =  dojo.byId("button6");
+    //forgotPasswordButton.disabled="disabled";
+    </script>
+    </div>
+{% endblock %}
+

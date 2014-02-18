@@ -1,0 +1,127 @@
+{% extends "robotQCIndex.html" %}
+
+<div id="breadcrumbs_region" dojoType="dijit.layout.ContentPane" region="top">
+    <!--Breadcrumbs-->
+</div>
+{% block breadcrumb %}
+    {{ block.super }} &raquo; <a href="/tutorial/">tutorial</a>
+{% endblock %}
+{% block maincenter %}
+  <p>
+ <b> General info:</b>
+  This server is meant to help people tune their liquid handling robots in as  cheap and fast way as possible.
+  </p>
+    <p>
+ <b>1. What you will need:</b>
+    </p>
+   a. A liquid handling robot.<br>
+   b. An infinite plate reader made by Tecan.<br>
+   c. infinite plate reader plates.<br>
+   d.A green  food color E202 E211.<br>
+    <p>
+ <b>2.procedure of work:<br></b>
+       <b> a. Think of the operation you want to tune. </b> for instance, aspirate 5 ul of liquid from eppendorf tube<br>
+       and dispense it into pcr well.<br></p>
+    <p>
+   <b>b. write the robot script.</b>
+       we will continue with the example from a. the 5 ul would be represented by food color in the eppendorf tube.<br>
+       We will allways complete the liquid amount in the well to 170. so in the test script we:<br>
+       aspirate 5 ul of color and dispense to pcr plate well. then, aspirate 165 water and dispense it to the same pcr well.<br>
+       repeat this process for at lis 48 wells.<br>
+       after the robot finishes the script, transfer 150 ul manually into plateReader plate
+    </p>
+    <p>
+    <p>
+    <b>
+    robot script example:
+    </b>
+    </p>
+    <p>
+    <img src="http://robotqcapp.appspot.com/download/5655612935372800" alt="">
+    </p>
+    <p>
+        <button dojoType="dijit.form.Button"  onClick="location.href='http://robotqcapp.appspot.com/download_as_txt/5720827718795264'">
+           download sample script
+        </button>
+    </p>
+  <b>c. do the same process manually for only 8 wells.</b> <br></p>
+    <p>
+   <b>d. take both plates (or the same plate)  and measure their OD in the reader.</b><br>
+       reader configuration should be as follows:<br>
+      shake for 60 seconds and read OD 10 times each well with 506 wave length.<br>
+      store the result files in xls format: robot.xls and manual.xls. <b> not xlsx! it will not work that way!</b><br></p>
+    <p>
+    <p>
+    example for robot plate reader report:
+    </p>
+    <p>
+        <img src="http://robotqcapp.appspot.com/download/5663945171927040" alt="">
+    </p>
+    <p>
+    <b>download sample robot xls report</b>
+    </p>
+    <p>
+    <button dojoType="dijit.form.Button"   onClick="location.href='http://robotqcapp.appspot.com/download_as_xls/5754053585797120'">
+        download sample robot xls report
+    </button>
+    </p>
+    <p>
+    <b> an example for manual xls report:</b>
+    </p>
+    <p>
+        <img src="http://robotqcapp.appspot.com/download/5125579611308032" alt="">
+    </p>
+    <p>
+        <b>download sample manual xls report</b>
+    </p>
+    <p>
+        <button dojoType="dijit.form.Button"   onClick="location.href='http://robotqcapp.appspot.com/download_as_xls/5645889129414656'">
+            download sample manual xls report
+        </button>
+    </p>
+    <p>
+        <button dojoType="dijit.form.Button"   onClick="location.href='http://robotqcapp.appspot.com/download/5744278240231424'">
+            download sample liquid class exd file
+        </button>
+    </p>
+   <b>e. create a new experiment on the server. </b>
+    <p>
+    <img src="http://robotqcapp.appspot.com/download/5148153959415808" alt="">
+    </p>
+    select the xls reports from d, the script file and optionally,</b><br>
+      upload the liquid classes file. This will save a snapshot<br>
+      of the liquid class configuration on the data base.<br></p>
+    <p>
+   <b>f. After you fill all the new experiment details, submit it to see the reports.<br></b>
+  </p>
+    <p>
+        <img src="http://robotqcapp.appspot.com/download/5711103912837120" alt="">
+    </p>
+    <p>
+    <b>explenation:</b>
+    The blue charts shows the OD values of each tip. left most column is manual
+    The red charts are for CV (Coeficience of Variance).
+    </p>
+    <p>
+        <img src="http://robotqcapp.appspot.com/download/5157877765373952" alt="">
+    </p>
+    <p>
+        <b>explenation:</b>
+       each column represents a tip OD reading. left most column represents the manual tip
+    </p>
+    <p>
+        <img src="http://robotqcapp.appspot.com/download/5678444981518336" alt="">
+    </p>
+    <p>
+        <b>explenation:</b>
+        Each line chart represents a tip OD reading. each dot on the chart represnts a well.
+        This graph helps us figure if there is a pattern in well number.
+        For example: first well has low volume then the others.
+    </p>
+    <p><b>downlad all test files alltogether in  a zip file</b></p>
+    <p>
+        <button dojoType="dijit.form.Button"   onClick="location.href='http://robotqcapp.appspot.com/experiments/download_exp_files/245001'">
+            downlad all test files alltogether in  a zip file
+        </button>
+    </p>
+{% endblock %}

@@ -1,0 +1,144 @@
+{% extends "robotQCIndex.html" %}
+
+{% block index_header_extra %}
+    <style type="text/css">
+        #experimentstableGridContainer{height:400px; width: 100%;}
+    </style>
+    <script type="text/javascript">
+        dojo.require("dijit.TitlePane")
+        dojo.require("dijit.form.Button");
+    </script>
+    {% load datable_tags %}
+    {% load  kioskApp_tags%}
+    {% block bridesAppTags %}
+        {% tableButtonFunc %}
+    {% endblock %}
+    {% datable_init %}
+    {% block projects_page_header_extra %}{% endblock %}
+{% endblock %}
+
+{% block breadcrumb %}
+    {{ block.super }} &raquo; <a href="/experiments/">experiments</a>
+{% endblock %}
+
+{% block maincenter%}
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+        google.load("visualization", "1", {packages:["corechart"]});
+       // google.setOnLoadCallback(drawChart);
+    {% autoescape off %}
+        function drawChart(listOfGrades,volume,liquidClass) {
+        var data = google.visualization.arrayToDataTable(//data for cv and means
+                listOfGrades
+        );
+
+    {% endautoescape %}
+    var options = {
+        title: 'grades of experiments.  volume = '+volume+'.  liquid class = '+liquidClass,
+        hAxis: {title: 'tests', titleTextStyle: {color: 'black'}},
+        vAxis:{title: 'average CV', titleTextStyle: {color: 'black'}}
+    };
+    var chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
+    chart.draw(data, options);
+    }
+
+        function createReportByExpName(){
+            var searchNameButton = dijit.byId("button1");
+            var textbox = dijit.byId('w_experimentstable_name');
+            dojo.connect(searchNameButton, "onClick", function(event){
+                console.log('in dojo event searchNameButton.onclick');
+                console.log('textbox.value = '+textbox.value);
+                var xhrArgs = {
+                    url:"/search_name",
+                    handleAs: "json",
+                    content:{"name":textbox.value},
+                    load:function(response, ioArgs){
+                        if (response.success){
+                            console.log("Submitted successfully");
+                            var listOfExpsGrades = response['listOfExpsGrades'];
+                            var volume =  response['volume'];
+                            var liquidClass =  response['liquidClass'];
+                            drawChart(listOfExpsGrades,volume,liquidClass);
+                        } else {
+                            console.log("Error: "+response.error);
+                        }
+                    },
+                    error:function(data){ // This happens on a 500 error or alikes.
+                        dojo.byId("info").innerHTML = "Error sending data.";
+                    }
+                }
+                // Call the asynchronous xhrPost
+                var deferred = dojo.xhrPost(xhrArgs);
+            });};
+        dojo.ready(createReportByExpName);
+        function searchName(){
+            var textbox =  dijit.byId('w_experimentstable_name');
+            datable_changed('experimentstable', 'name', textbox.value);
+        }
+        function searchDescription(){
+            var textbox =  dijit.byId('w_experimentstable_description');
+            datable_changed('experimentstable', 'description', textbox.value);
+        }
+           function searchVolume(){
+            var textbox =  dijit.byId('w_experimentstable_volume');
+            datable_changed('experimentstable', 'volume', textbox.value);
+        }
+        function refresh1(){
+            experimentstableGrid_clearAllFilters();
+            experimentstableRefresh();
+        }
+    </script>
+    <table>
+    <tr>
+        <td>
+    <p>Search: {% datable_widget experimentstable  name %}</p>
+        </td>
+        <td>
+    <button dojoType="dijit.form.Button" id="button1"  onClick="searchName()">
+   search name
+    </button>
+        </td>
+    </tr>
+        <tr>
+            <td>
+    <p>Search: {% datable_widget experimentstable  description %}</p>
+           </td>
+            <td>
+    <button dojoType="dijit.form.Button" id="button2"  onClick="searchDescription()">
+        search description
+    </button>
+            </td>
+        </tr>
+        <tr>
+            <td>
+    <p>Search: {% datable_widget experimentstable  date %}</p>
+            </td>
+             </tr>
+          <tr>
+            <td>
+    <p>Search: {% datable_widget experimentstable  volume %}</p>
+                </td>
+              <td>
+                <button dojoType="dijit.form.Button"   onClick="searchVolume()">
+        search volume
+    </button>
+            </td>
+             </tr>
+        <tr>
+            <td>
+            <button dojoType="dijit.form.Button" id="button3"  onClick=" refresh1()">
+                רענן טבלא
+            </button>
+            </td>
+        </tr>
+    </table>
+        {% datable experimentstable%}
+        <div id="experimentstableGridContainer"></div>
+        <p>
+            {% datable_refresh_button experimentstable %}
+            {% datable_xls_button experimentstable %}
+            {% datable_csv_button experimentstable %}
+
+        </p>
+    <div id="chart_div" style="width: 900px; height: 500px;"></div>
+{% endblock %}

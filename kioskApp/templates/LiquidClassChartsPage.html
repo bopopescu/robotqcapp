@@ -1,0 +1,98 @@
+{% extends "robotQCIndex.html" %}
+
+{% block index_header_extra %}
+    <style type="text/css">
+        #experimentstableGridContainer{height:400px; width: 100%;}
+    </style>
+    <script type="text/javascript">
+        dojo.require("dijit.TitlePane")
+        dojo.require("dijit.form.Button");
+        dojo.require("dijit.Dialog");
+    </script>
+    {% load datable_tags %}
+    {% load  kioskApp_tags%}
+    {% block bridesAppTags %}
+        {% tableButtonFunc %}
+    {% endblock %}
+    {% datable_init %}
+    {% block projects_page_header_extra %}{% endblock %}
+{% endblock %}
+
+{% block breadcrumb %}
+    {{ block.super }} &raquo; <a href="/liquid_class_volume_chart/">view liquid class chart</a>
+{% endblock %}
+
+{% block maincenter%}
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+        google.load("visualization", "1", {packages:["corechart"]});
+        // google.setOnLoadCallback(drawChart);
+        {% autoescape off %}
+            function drawChart(listOfGrades,volume,liquidClass,xAxisTitle,yAxisTitle,divId) {
+            var data = google.visualization.arrayToDataTable(//data for cv and means
+                    listOfGrades
+            );
+
+        {% endautoescape %}
+        var options = {
+            title: 'grades of experiments.  volume = '+volume+'.  liquid class = '+liquidClass,
+            hAxis: {title: xAxisTitle, titleTextStyle: {color: 'black'}},
+            vAxis:{title: yAxisTitle, titleTextStyle: {color: 'black'}}
+        };
+        var chart = new google.visualization.ColumnChart(document.getElementById(divId));
+        chart.draw(data, options);
+        }
+
+
+        function sendForm(){
+            var form = dojo.byId("myform");
+
+            dojo.connect(form, "onsubmit", function(event){
+                // Stop the submit event since we want to control form submission.
+                dojo.stopEvent(event);
+
+                // The parameters to pass to xhrPost, the form, how to handle it, and the callbacks.
+                // Note that there isn't a url passed.  xhrPost will extract the url to call from the form's
+                //'action' attribute.  You could also leave off the action attribute and set the url of the xhrPost object
+                // either should work.
+                var xhrArgs = {
+                    form:dojo.byId("myForm"),
+                    handleAs: "text",
+                    url:"/post_liquid_class_volume_chart/",
+                    load: function(data){
+                        console.log("Form posted.");
+                        eval("var x = " + data+ ";");
+                        hideLoad();
+                        drawChart(x.distances, x.volume.toString(), x.liquidClass,'experiments','average distance', 'chart_div_distances');
+                    },
+                    error: function(error){
+                        // We'll 404 in the demo, but that's okay.  We don't have a 'postIt' service on the
+                        // docs server.
+                        console.log("Form posted with errors.");
+                    }
+                }
+                // Call the asynchronous xhrPost
+                console.log("Form being sent...");
+                showLoad();
+                var deferred = dojo.xhrPost(xhrArgs);
+            });
+        }
+        dojo.ready(sendForm);
+        function showLoad(){
+            var load =  dijit.byId("loading");
+            load.show();
+        };
+        function hideLoad(){
+            var load =  dijit.byId("loading");
+            load.hide();
+        };
+    </script>
+    <form  action="/post_liquid_class_volume_chart/" method="post" id="myForm">
+        <table>{{ form.as_table }}</table>
+        <input type="submit" value="Submit" />
+    </form>
+    <div id="chart_div_distances" style="width: 900px; height: 500px;"></div>
+    <div id="loading" title="loading data" data-dojo-type="dijit.Dialog">
+        <img src="http://udikiosk.appspot.com/download/6251374828322816">
+    </div>
+{% endblock %}

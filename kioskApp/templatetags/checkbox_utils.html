@@ -1,0 +1,48 @@
+<script type="text/javascript">
+
+    var checkedListJson = {};
+    function checkboxEventHandler(chk){
+     if(chk.checked){
+         checkedListJson[chk.id]=chk.id;
+         return;
+     }
+     if((chk.id in checkedListJson)&&(!chk.checked)){
+         delete checkedListJson[chk.id];
+         return;
+     }
+    return;
+    }
+    function isChecked(id)
+    {
+        var res = false;
+        if(id in checkedListJson){
+            res = true;
+        }
+        return res;
+    }
+    function datable_checkboxFormatter(value){
+        /*expects value = [bool checked, int pk].
+         gets value from checkBoxSerializer*/
+        if (value[1]!=undefined){
+            if(value[1] == 'true'){
+                 checkedListJson['checkbox_'+value[0]]='checkbox_'+value[0];
+            }
+        }
+        var checkBox = dijit.byId('checkbox_'+value[0])
+        if (checkBox){
+            checkBox.checked = isChecked("checkbox_"+ value[0]);
+            checkBox.value = "true";
+        }else{
+        checkBox = new dijit.form.CheckBox({
+            id: "checkbox_"+ value[0],
+            checked: isChecked("checkbox_"+ value[0]),
+            value : "true",
+            name: "checkbox_" + this.id,
+            onChange: function(b){ checkboxEventHandler(this) }
+        });}
+        checkBox._destroyOnRemove = true;
+        return checkBox;
+    }
+
+
+</script>

@@ -1,0 +1,7 @@
+
+<button data-dojo-type="dijit.form.Button" id="newProjectButton" type="button">
+    <script type="dojo/method" data-dojo-event="onClick" data-dojo-args="evt">
+       location.href='new_project';
+    </script>
+    create a new project
+</button>

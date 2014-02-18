@@ -1,0 +1,53 @@
+
+{% extends "robotQCIndex.html" %}
+
+{% block base_header_extra %}
+
+    {% block index_header_extra %}
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    {% endblock %}
+
+{% endblock %}
+{% block breadcrumb %}
+    {{ block.super }} &raquo; <a href="/robot_scripts_page/">robot scripts page</a>
+{% endblock %}
+{% block maincenter %}
+    <!-- User details form -->
+    <p>
+
+    </p>
+    <p>
+        {% if message %}
+            {{ message }}
+        {% endif %}
+    </p>
+    {% if user  and user.is_active %}
+        <p> ברוך הבא</p>
+        <p>{{ user.username }}!</p>
+    {% else %}
+
+    {% endif %}
+    <button data-dojo-type="dijit.form.Button" type="button" id="button3"k>scripts  page
+        <script type="dojo/connect" data-dojo-event="onClick"> window.location = "scripts/"</script>
+    </button>
+
+    {% if  not user.is_authenticated %}
+        <script  type="text/javascript">
+            var mybuttens = new Array();
+            mybuttens[0] = dojo.byId("button1");
+            mybuttens[1] = dojo.byId("button2");
+            mybuttens[2] = dojo.byId("button3");
+            for (var i=0;i<mybuttens.length;i++)
+            {
+                mybuttens[i].disabled="disabled";
+            }
+        </script>
+    {% endif %}
+    <script type="text/javascript">
+        //forgotPasswordButton =  dojo.byId("button6");
+        //forgotPasswordButton.disabled="disabled";
+    </script>
+    </div>
+{% endblock %}
+

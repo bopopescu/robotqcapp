@@ -1,0 +1,13 @@
+<script type="text/javascript">
+    function download(){
+        // Split up bar into 5% segments
+        numParts = Math.floor(100/5);
+        jsProgress.update({ maximum: numParts, progress:0 });
+        for (var i=0; i<=numParts; i++){
+            // This plays update({progress:0}) at 1nn milliseconds,
+            // update({progress:1}) at 2nn milliseconds, etc.
+            setTimeout("jsProgress.update({ progress: " + i + " })",(i+1)*100 +
+                    Math.floor(Math.random()*100));
+        }
+    }
+</script>

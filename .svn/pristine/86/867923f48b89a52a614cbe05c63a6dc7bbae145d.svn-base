@@ -1,0 +1,73 @@
+<script type="text/javascript">
+    /* This templatetag gets array named value with pk,url,title,pk_name values.
+     It's job is to create generic button for all purpose  inside a column*/
+    function buttonEventHandler(value){
+        location.href = value[1]+value[0];
+    }
+    function buttonS3FileEventHandler(value){
+        location.href = value[0];
+    }
+    function datable_buttonS3FileFormatter(value){
+        var myButton = new dijit.form.Button({
+            label: value[1],
+            onClick: function(){
+                // Do something:
+                buttonS3FileEventHandler(value);
+            }});
+        return myButton;
+    }
+    function datable_integerFormatter(value){
+        var myTextBox = new dijit.form.TextBox({
+            value:  value[0]
+            });
+        return myTextBox;
+    }
+    function datable_buttonFormatter(value){
+        var myButton = new dijit.form.Button({
+            label: value[2],
+            onClick: function(){
+                // Do something:
+                buttonEventHandler(value);
+            }});
+        return myButton;
+    }
+    function datable_jsonButtonFormatter(value){
+        var myButton = dijit.byId("downloadStepFiles"+value[0])
+        if(!myButton)
+         myButton = new dijit.form.Button({
+            label: value[2],
+            id:"downloadStepFiles"+value[0]
+           });
+        var downloadStepFiles = dijit.byId("downloadStepFiles"+value[0]);
+        dojo.connect(downloadStepFiles, "onClick", function(event){
+            var xhrArgs = {
+                url:"downloadStepFiles/"+value[0],
+                handleAs: "json",
+                content:{step:value[0]},
+                load:function(response, ioArgs){
+                    if (response.success){
+                        for(var key in response){
+                            console.log('got dict from server. key= '+key);
+                            var attrName = key;
+                            if (attrName == 'zip')
+                            {
+                                var attrValue = response[key];
+                                var path =  attrValue;
+                                window.location.href = path;
+                            }
+                        }
+                        console.log("Submitted successfully");
+                    } else {
+                        console.log("Error: "+response.error);
+                    }
+                },
+                error:function(data){ // This happens on a 500 error or alikes.
+                    dojo.byId("info").innerHTML = "Error sending data.";
+                }
+            }
+            // Call the asynchronous xhrPost
+            var deferred = dojo.xhrPost(xhrArgs);
+        });
+        return myButton;};
+
+</script>
