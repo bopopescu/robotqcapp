@@ -593,7 +593,7 @@ def viewRobotErrorsChart(request):
     scripts = {}
     q = RobotError.objects.all()
     for err in q:
-        script_time = str(err.script_time.replace(microsecond=0))
+        script_time = str(err.timeStamp.replace(microsecond=0, second = 0, minute = 0))
         err_time = str(err.timeStamp)
         if scripts.get(script_time):
             val = scripts.get(script_time)+1
