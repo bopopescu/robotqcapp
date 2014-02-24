@@ -29,6 +29,8 @@ urlpatterns = patterns('',
     (r'^search_name$','kioskApp.views.search_name'),
     (r'^liquid_class_volume_chart/$','kioskApp.views.viewLiquidClassChart'),
     (r'^post_liquid_class_volume_chart/$','kioskApp.views.postViewLiquidClassChart'),
+    (r'^upload_robot_errors/$','kioskApp.views.uploadRobotErrors'),
+    (r'^view_robot_errors/$','kioskApp.views.viewRobotErrorsChart'),
     ### Admin
     url(r'^admin/', include(admin.site.urls)),
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),

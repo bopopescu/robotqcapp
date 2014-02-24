@@ -51,3 +51,4 @@ def replaceLiquidClass(liquidClassesFile,liquidClassFile,exp):
     smallData1 = smallData1.replace(u'<?xml version="1.0" encoding="utf-8"?>\n',u'')
     bigData1 = bigData1.replace(subStrToReplace,smallData1)
     return bigData1
+

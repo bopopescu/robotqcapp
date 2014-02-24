@@ -120,3 +120,8 @@ class UserProfile(models.Model):
 class LiquidClassVolume(models.Model):
     liquidClass = models.ForeignKey(LiquidClass,related_name='+')
     volume = models.IntegerField(blank=True,null=True,default=0)
+
+class RobotError(models.Model):
+    msg_id = models.CharField(max_length=50)
+    msg_value = models.CharField(max_length=50)
+    timeStamp = models.DateTimeField(blank=True,null=True,auto_now_add = True)

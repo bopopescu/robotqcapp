@@ -47,6 +47,29 @@ import random
 from django.views.decorators.csrf import csrf_exempt
 from xml.dom.minidom import parse, parseString
 from google.appengine.ext import blobstore
+import time
+
+ERROR_DICT = {"EVO_EVO_000_011":"No connection to the instrument.Retry?",
+              "EVO_EVO_020_000":"Carrier <name> not found on grid",
+               "EVO_EVO_007_001":"Error opening <file name>",
+			   "EVO_EVO_013_039":"Invalid operand",
+			   "EVO_EVO_000_031":"Checksum of <name> is missing or incorrect.Do you want to use it?",
+			   "EVO_EVO_003_002":"Error shutting down devices: <name>",
+			   "EVO_EVO_007_001":"Error opening <file name>",
+			   "EVO_EVO_012_002":"Invalid operand",
+			   "EVO_EVO_012_006":"Device not initialised",
+			   "EVO_EVO_008_006":"Script contains errors! For more information see the log file.",
+			   "EVO_EVO_023_000":"Instrument error <error number> (<error text>), device <name>, command <name>",
+			   "EVO_EVO_000_006":"Error writing <file name>",
+			   "EVO_EVO_003_001":"Error unloading device drivers: ",
+			   "EVO_EVO_013_004":"Arm is collided",
+			   "EVO_EVO_006_000":"Error initializing devices: <name>",
+			   "EVO_EVO_020_002":"<axis>-coordinate of ROMA vector ",
+			   "EVO_EVO_002_001":"DITI not dropped for tip<number>.Retry?",
+			   "EVO_EVO_013_013":"Arm is collided",
+			   "EVO_EVO_000_012":"Error loading device drivers: <file name>",
+			   "EVO_EVO_013_009":"Error in liquid sensor"}
+
 
 def getAverageCV(pipetorsCV):
     num =0.0
@@ -522,3 +545,46 @@ def postViewLiquidClassChart(request):
         if distance != 1:
             distances.append([experiment.name,experiment.grade, distance*10])
     return {'distances':distances,'liquidClass':liquid_class.name,'volume': volume,}
+
+
+def uploadRobotErrors(request):
+
+    view_url = '/upload_robot_errors/'
+    upload_url, upload_data = prepare_upload(request, view_url)
+    if request.method=='POST':
+        form = UploadForm (request.POST, request.FILES) #bound form to project
+        if form.is_valid():
+            f=form.save()
+            for line in f.file:
+                params = line.split(' ### ')
+                msg_id = params[0]
+                msg_value = params[1]
+                time_stamp_str = params[2]
+                struct_time = datetime.strptime(time_stamp_str, "%Y-%m-%d %H:%M:%S.%f\r\n")
+                robotError ,created = RobotError.objects.get_or_create(msg_id=msg_id,msg_value=msg_value,
+                                                                       timeStamp=struct_time)
+            return HttpResponseRedirect('/')
+    else:
+        form = UploadForm()
+        return direct_to_template(request, 'uploadErrors.html',
+            { 'form':form,
+              'upload_data':upload_data,
+              })
+
+def viewRobotErrorsChart(request):
+    robot_errors  = [['message','count']]
+    existing_msgs = {}
+    q = RobotError.objects.all()
+    for err in q:
+        msg = err.msg_value
+        if existing_msgs.get(msg):
+            val = existing_msgs.get(msg)+1
+            existing_msgs[msg] = val
+        else:
+            existing_msgs[msg] = 1
+    for key,value in existing_msgs.iteritems():
+        if key.find('Checksum of <name> is missing or incorrect.') == -1:
+            robot_errors.append([key,value])
+    c = RequestContext(request,{'robot_errors':simplejson.dumps(robot_errors),
+                                'count':q.count()})
+    return render_to_response('view_robot_errors_chart.html',c)

@@ -71,6 +71,12 @@
     <button data-dojo-type="dijit.form.Button" type="button" >show grades chart of liquid classes and volumes
         <script type="dojo/connect" data-dojo-event="onClick"> window.location = "/liquid_class_volume_chart/"</script>
     </button>
+     <button data-dojo-type="dijit.form.Button" type="button" >upload robot errors file
+        <script type="dojo/connect" data-dojo-event="onClick"> window.location = "/upload_robot_errors/"</script>
+    </button>
+    <button data-dojo-type="dijit.form.Button" type="button" >view robot errors chart
+        <script type="dojo/connect" data-dojo-event="onClick"> window.location = "/view_robot_errors/"</script>
+    </button>
 {% if  not user.is_authenticated %}
     <script  type="text/javascript">
     var mybuttens = new Array();
