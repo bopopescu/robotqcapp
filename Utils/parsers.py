@@ -3,6 +3,7 @@ from xml.dom.minidom import parse, parseString
 from google.appengine.api import files
 from settings import PROJECT_PATH
 import shutil
+
 def clean_alphabet_string_from_garbage(alphabet_garbage, inputstring):
     outputstring = ''
     for character in inputstring:

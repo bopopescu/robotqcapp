@@ -112,7 +112,7 @@ class UserProfile(models.Model):
     user = models.OneToOneField(User)
     username = models.CharField(max_length=30)
     password = models.CharField(max_length=30)
-    email = models.EmailField(max_length=40)
+    email = models.CharField(max_length=40)
     title = models.CharField(max_length=45)
     def __str__(self):
         return "%s's profile" % self.user
