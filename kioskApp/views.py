@@ -551,6 +551,7 @@ def uploadRobotErrors(request):
 
     view_url = '/upload_robot_errors/'
     upload_url, upload_data = prepare_upload(request, view_url)
+    q = RobotError.objects.all()
     if request.method=='POST':
         form = UploadForm (request.POST, request.FILES) #bound form to project
         if form.is_valid():
@@ -559,10 +560,15 @@ def uploadRobotErrors(request):
                 params = line.split(' ### ')
                 msg_id = params[0]
                 msg_value = params[1]
-                time_stamp_str = params[2]
-                struct_time = datetime.strptime(time_stamp_str, "%Y-%m-%d %H:%M:%S.%f\r\n")
+                time_stamp_script = params[2]
+                time_stamp = params[3]
+                struct_time_script = datetime.strptime(time_stamp_script, "%Y-%m-%d %H:%M:%S.%f")
+                try:
+                    time_stamp = datetime.strptime(time_stamp, "%Y-%m-%d %H:%M:%S\r\n")
+                except Exception as e:
+                    time_stamp = struct_time_script
                 robotError ,created = RobotError.objects.get_or_create(msg_id=msg_id,msg_value=msg_value,
-                                                                       timeStamp=struct_time)
+                    script_time=struct_time_script,timeStamp = time_stamp)
             return HttpResponseRedirect('/')
     else:
         form = UploadForm()

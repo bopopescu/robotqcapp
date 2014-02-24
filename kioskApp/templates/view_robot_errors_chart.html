@@ -31,23 +31,23 @@
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
     <script type="text/javascript">
         google.load("visualization", "1", {packages:["corechart"]});
-        google.setOnLoadCallback(drawChart);
         {% autoescape off %}
-            function drawChart() {
+            function drawChart(data,title,chart_type,div_id) {
             var data = google.visualization.arrayToDataTable(//data for cv and means
-                {{ robot_errors }}
+              data
             );
 
  var options = {
-          title: 'robot errors'
+          title:title
         };
-
-        var chart = new google.visualization.PieChart(document.getElementById('pie_chart_div'));
+        if(chart_type == 'pie'){
+            var chart = new google.visualization.PieChart(document.getElementById(div_id));
+        }
         chart.draw(data, options);
        }
-{% endautoescape %}
 
-
+    drawChart( {{ robot_errors }},'robot errors','pie','pie_chart_div');
+        {% endautoescape %}
     </script>
     <p>Total number of errors loaded to server = {{ count }}</p>
 

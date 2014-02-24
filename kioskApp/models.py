@@ -125,3 +125,4 @@ class RobotError(models.Model):
     msg_id = models.CharField(max_length=50)
     msg_value = models.CharField(max_length=50)
     timeStamp = models.DateTimeField(blank=True,null=True,auto_now_add = True)
+    script_time =  models.DateTimeField(blank=True,null=True,auto_now_add = True)
