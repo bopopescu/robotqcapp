@@ -31,26 +31,32 @@
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
     <script type="text/javascript">
         google.load("visualization", "1", {packages:["corechart"]});
+        google.setOnLoadCallback(drawChart);
         {% autoescape off %}
-            function drawChart(data,title,chart_type,div_id) {
+            function drawChart() {
             var data = google.visualization.arrayToDataTable(//data for cv and means
-              data
+                {{ robot_errors }}
             );
-
+                var data1 = google.visualization.arrayToDataTable(//data for cv and means
+                        {{ robot_scripts }}
+                );
  var options = {
-          title:title
+          title: 'robot errors'
         };
-        if(chart_type == 'pie'){
-            var chart = new google.visualization.PieChart(document.getElementById(div_id));
-        }
+var options1 = {
+      title: 'robot errors per script'
+      };
+        var chart = new google.visualization.PieChart(document.getElementById('pie_chart_div'));
         chart.draw(data, options);
+        var chart1 = new google.visualization.ColumnChart(document.getElementById('column_chart_div'));
+        chart1.draw(data1, options1);
        }
+{% endautoescape %}
 
-    drawChart( {{ robot_errors }},'robot errors','pie','pie_chart_div');
-        {% endautoescape %}
+
     </script>
     <p>Total number of errors loaded to server = {{ count }}</p>
 
     <div id="pie_chart_div" style="width: 900px; height: 900px;"></div>
-
+    <div id="column_chart_div" style="width: 900px; height: 900px;"></div>
 {% endblock %}

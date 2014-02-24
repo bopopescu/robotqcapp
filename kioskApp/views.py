@@ -51,24 +51,34 @@ import time
 
 ERROR_DICT = {"EVO_EVO_000_011":"No connection to the instrument.Retry?",
               "EVO_EVO_020_000":"Carrier <name> not found on grid",
-               "EVO_EVO_007_001":"Error opening <file name>",
-			   "EVO_EVO_013_039":"Invalid operand",
-			   "EVO_EVO_000_031":"Checksum of <name> is missing or incorrect.Do you want to use it?",
-			   "EVO_EVO_003_002":"Error shutting down devices: <name>",
-			   "EVO_EVO_007_001":"Error opening <file name>",
-			   "EVO_EVO_012_002":"Invalid operand",
-			   "EVO_EVO_012_006":"Device not initialised",
-			   "EVO_EVO_008_006":"Script contains errors! For more information see the log file.",
-			   "EVO_EVO_023_000":"Instrument error <error number> (<error text>), device <name>, command <name>",
-			   "EVO_EVO_000_006":"Error writing <file name>",
-			   "EVO_EVO_003_001":"Error unloading device drivers: ",
-			   "EVO_EVO_013_004":"Arm is collided",
-			   "EVO_EVO_006_000":"Error initializing devices: <name>",
-			   "EVO_EVO_020_002":"<axis>-coordinate of ROMA vector ",
-			   "EVO_EVO_002_001":"DITI not dropped for tip<number>.Retry?",
-			   "EVO_EVO_013_013":"Arm is collided",
-			   "EVO_EVO_000_012":"Error loading device drivers: <file name>",
-			   "EVO_EVO_013_009":"Error in liquid sensor"}
+              "EVO_EVO_007_001":"Error opening <file name>",
+              "EVO_EVO_013_039":"Invalid operand",
+              "EVO_EVO_000_031":"Checksum of <name> is missing or incorrect.Do you want to use it?",
+              "EVO_EVO_003_002":"Error shutting down devices: <name>",
+              "EVO_EVO_007_001":"Error opening <file name>",
+              "EVO_EVO_012_002":"Invalid operand",
+              "EVO_EVO_012_006":"Device not initialised",
+              "EVO_EVO_008_006":"Script contains errors! For more information see the log file.",
+              "EVO_EVO_023_000":"Instrument error <error number> (<error text>), device <name>, command <name>",
+              "EVO_EVO_000_006":"Error writing <file name>",
+              "EVO_EVO_003_001":"Error unloading device drivers: ",
+              "EVO_EVO_013_004":"Arm is collided",
+              "EVO_EVO_006_000":"Error initializing devices: <name>",
+              "EVO_EVO_020_002":"<axis>-coordinate of ROMA vector ",
+              "EVO_EVO_002_001":"DITI not dropped for tip<number>.Retry?",
+              "EVO_EVO_013_013":"Arm is collided",
+              "EVO_EVO_000_012":"Error loading device drivers: <file name>",
+              "EVO_EVO_013_009":"Error in liquid sensor",
+              "EVO_EVO_012_007":"Command Overflow",
+              "EVO_EVO_005_009":"The selected script is empty! It cannot be executed!",
+              "EVO_EVO_017_002":"Roma <number> not found!",
+              "EVO_EVO_011_000":"The value for Grid has to be between <number> and <number>.",
+              "EVO_EVO_024_001":"The resulting script contains invalid groups or loops. The action is canceled.",
+              "EVO_EVO_007_010":"Operator query for process variables failed! The operator cancelled the query dialog.",
+              "EVO_EVO_002_000":"Diluter <number> broken! Switching Diluter off!",
+              "EVO_EVO_011_001":"The value for Site has to be ",
+              "EVO_EVO_022_000":"Instrument has no LiHA ",
+              "EVO_EVO_011_002":"The value for Position in labware has to be between <number> and <number>."}
 
 
 def getAverageCV(pipetorsCV):
@@ -551,7 +561,6 @@ def uploadRobotErrors(request):
 
     view_url = '/upload_robot_errors/'
     upload_url, upload_data = prepare_upload(request, view_url)
-    q = RobotError.objects.all()
     if request.method=='POST':
         form = UploadForm (request.POST, request.FILES) #bound form to project
         if form.is_valid():
@@ -561,10 +570,10 @@ def uploadRobotErrors(request):
                 msg_id = params[0]
                 msg_value = params[1]
                 time_stamp_script = params[2]
-                time_stamp = params[3]
-                struct_time_script = datetime.strptime(time_stamp_script, "%Y-%m-%d %H:%M:%S.%f")
+                time_stamp_error = params[3].strip()
+                struct_time_script = datetime.strptime(time_stamp_script, "%Y-%m-%d %H:%M:%S")
                 try:
-                    time_stamp = datetime.strptime(time_stamp, "%Y-%m-%d %H:%M:%S\r\n")
+                    time_stamp = datetime.strptime(time_stamp_error, "%Y-%m-%d %H:%M:%S")
                 except Exception as e:
                     time_stamp = struct_time_script
                 robotError ,created = RobotError.objects.get_or_create(msg_id=msg_id,msg_value=msg_value,
@@ -579,9 +588,18 @@ def uploadRobotErrors(request):
 
 def viewRobotErrorsChart(request):
     robot_errors  = [['message','count']]
+    robot_scripts = [['script','number of errors']]
     existing_msgs = {}
+    scripts = {}
     q = RobotError.objects.all()
     for err in q:
+        script_time = str(err.script_time.replace(microsecond=0))
+        err_time = str(err.timeStamp)
+        if scripts.get(script_time):
+            val = scripts.get(script_time)+1
+            scripts[script_time] = val
+        else:
+            scripts[script_time] = 1
         msg = err.msg_value
         if existing_msgs.get(msg):
             val = existing_msgs.get(msg)+1
@@ -589,8 +607,10 @@ def viewRobotErrorsChart(request):
         else:
             existing_msgs[msg] = 1
     for key,value in existing_msgs.iteritems():
-        if key.find('Checksum of <name> is missing or incorrect.') == -1:
-            robot_errors.append([key,value])
+                if key.find('Checksum of <name> is missing or incorrect.') == -1:
+                    robot_errors.append([key,value])
+    for key,value in scripts.iteritems():
+        robot_scripts.append([key,value])
     c = RequestContext(request,{'robot_errors':simplejson.dumps(robot_errors),
-                                'count':q.count()})
+                                'robot_scripts':simplejson.dumps(robot_scripts),'count':q.count()})
     return render_to_response('view_robot_errors_chart.html',c)

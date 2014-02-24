@@ -85,13 +85,21 @@ class ErrorFinder(object):
         minute =  message[timedict.get('hour'):timedict.get('minute')]
         second =  message[timedict.get('minute'):timedict.get('second')]
         #2013-04-25 13:50:32.21428
-        res = year+'-'+month+'-'+day+' '+hour+':'+minute+':'+second+'.00'
+        res = year+'-'+month+'-'+day+' '+hour+':'+minute+':'+second
         return res
     def getErrorTimeStamp(self,message):
         start = 2
         end = 2+len('16:25:00')
         time = message[start:end]
         return time
+    def getScriptDate(self,message):
+        timedict = {'year':4,'month':6,'day':8,
+                    'hour':11,'minute':13,'second':15}
+        year = message[0:timedict.get('year')]
+        month = message[timedict.get('year'):timedict.get('month')]
+        day =  message[timedict.get('month'):timedict.get('day')]
+        res = year+'-'+month+'-'+day
+        return res
     def parseTextLogDir(self):
         unknown_msg_ids = set()
         output=open ('output.txt' , 'w')
@@ -101,9 +109,10 @@ class ErrorFinder(object):
                 for i , message in enumerate(f.readlines()):
                     if i == 1:
                         scriptTimeStamp =  self.getScriptTimeStamp(message)
+                        scriptDate = self.getScriptDate(message)
                     if message.find('EVO_EVO_') != -1:
                         msg_id,msg_value = self.getMessageParams(message)
-                        msg_time = self.getErrorTimeStamp(message)
+                        msg_time = scriptDate+' '+self.getErrorTimeStamp(message)
                         if not msg_value:
                             unknown_msg_ids.add(msg_id)
                         delimeter = ' ### '
