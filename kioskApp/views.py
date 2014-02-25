@@ -565,6 +565,7 @@ def uploadRobotErrors(request):
         form = UploadForm (request.POST, request.FILES) #bound form to project
         if form.is_valid():
             f=form.save()
+            f.save()#save for reuse
             for line in f.file:
                 params = line.split(' ### ')
                 msg_id = params[0]
