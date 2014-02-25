@@ -577,8 +577,11 @@ def uploadRobotErrors(request):
                     time_stamp = datetime.strptime(time_stamp_error, "%Y-%m-%d %H:%M:%S")
                 except Exception as e:
                     time_stamp = struct_time_script
-                robotError ,created = RobotError.objects.get_or_create(msg_id=msg_id,msg_value=msg_value,
+                try:
+                    robotError ,created = RobotError.objects.get_or_create(msg_id=msg_id,msg_value=msg_value,
                     script_time=struct_time_script,timeStamp = time_stamp)
+                except Exception as e:
+                    pass
             return HttpResponseRedirect('/')
     else:
         form = UploadForm()
@@ -589,29 +592,32 @@ def uploadRobotErrors(request):
 
 def viewRobotErrorsChart(request):
     robot_errors  = [['message','count']]
-    robot_scripts = [['script','number of errors']]
+    robot_scripts = []
     existing_msgs = {}
     scripts = {}
     q = RobotError.objects.all()
     for err in q:
-        script_time = str(err.timeStamp.replace(microsecond=0, second = 0, minute = 0))
+        script_time = str(err.script_time)
         err_time = str(err.timeStamp)
-        if scripts.get(script_time):
-            val = scripts.get(script_time)+1
-            scripts[script_time] = val
-        else:
-            scripts[script_time] = 1
         msg = err.msg_value
-        if existing_msgs.get(msg):
-            val = existing_msgs.get(msg)+1
-            existing_msgs[msg] = val
-        else:
-            existing_msgs[msg] = 1
+        if msg.find('Checksum of <name> is missing or incorrect.Do you want to use it') == -1\
+        and msg.find('Carrier <name> not found on grid') == -1:
+            if scripts.get(script_time):
+                    val = scripts.get(script_time)+1
+                    scripts[script_time] = val
+            else:
+                    scripts[script_time] = 1
+            if existing_msgs.get(msg):
+                    val = existing_msgs.get(msg)+1
+                    existing_msgs[msg] = val
+            else:
+                existing_msgs[msg] = 1
     for key,value in existing_msgs.iteritems():
-                if key.find('Checksum of <name> is missing or incorrect.') == -1:
-                    robot_errors.append([key,value])
+                robot_errors.append([key,value])
     for key,value in scripts.iteritems():
         robot_scripts.append([key,value])
+    robot_scripts.sort(key=lambda script: script[0])
+    robot_scripts.insert(0,['script','number of errors'])
     c = RequestContext(request,{'robot_errors':simplejson.dumps(robot_errors),
-                                'robot_scripts':simplejson.dumps(robot_scripts),'count':q.count()})
+                                'robot_scripts':simplejson.dumps(robot_scripts),'error_count':q.count(),'script_count':len(robot_scripts)-1})
     return render_to_response('view_robot_errors_chart.html',c)
