@@ -621,3 +621,28 @@ def viewRobotErrorsChart(request):
     c = RequestContext(request,{'robot_errors':simplejson.dumps(robot_errors),
                                 'robot_scripts':simplejson.dumps(robot_scripts),'error_count':q.count(),'script_count':len(robot_scripts)-1})
     return render_to_response('view_robot_errors_chart.html',c)
+
+def viewGraph(request):
+    vertex = [ "1", "2", "3", "4",
+                 "5", "6", "7", "8",
+                 "9", "10", "11" ];
+    edges = [
+        ["1","2"],
+        ["2","3"],
+        [ "3", "4"],
+        ["5","11"],
+        ["11","4"],
+        ["6","8"],
+        ["8","11"],
+        ["7","8"],
+        ["8","9"],
+        ["10","9"],
+
+    ]
+
+    c = RequestContext(request,{'vertex':vertex,'edges':edges})
+    return render_to_response('graph.html',c)
+
+@json_response
+def miserables(request):
+    return {}
