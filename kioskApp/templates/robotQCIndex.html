@@ -77,6 +77,9 @@
     <button data-dojo-type="dijit.form.Button" type="button" >view robot errors chart
         <script type="dojo/connect" data-dojo-event="onClick"> window.location = "/view_robot_errors/"</script>
     </button>
+	  <button data-dojo-type="dijit.form.Button" type="button" >sign up new user
+        <script type="dojo/connect" data-dojo-event="onClick"> window.location = "/new_user/"</script>
+    </button>
 {% if  not user.is_authenticated %}
     <script  type="text/javascript">
     var mybuttens = new Array();

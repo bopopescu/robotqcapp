@@ -1,15 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="75b629e7-1819-45b7-965c-735daaa1ea90" name="Default" comment="addeed ErrorsParsers to parse errors from robot">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/kioskApp/templates/graph.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/Google_App_Engine_SDK.xml" afterPath="$PROJECT_DIR$/.idea/libraries/Google_App_Engine_SDK.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/robotqc.iml" afterPath="$PROJECT_DIR$/.idea/robotqc.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/urls.py" afterPath="$PROJECT_DIR$/urls.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/kioskApp/views.py" afterPath="$PROJECT_DIR$/kioskApp/views.py" />
+    <list default="true" id="75b629e7-1819-45b7-965c-735daaa1ea90" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/kioskApp/templates/graph.html" afterPath="$PROJECT_DIR$/kioskApp/templates/graph.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/kioskApp/views.py" afterPath="$PROJECT_DIR$/kioskApp/views.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/urls.py" afterPath="$PROJECT_DIR$/urls.py" />
     </list>
     <ignored path="robotqc.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -21,7 +17,7 @@
   </component>
   <component name="ChangesViewManager" flattened_view="true" show_ignored="false" />
   <component name="CoverageDataManager">
-    <SUITE FILE_PATH="coverage/robotqc$robotqc.coverage" NAME="robotqc Coverage Results" MODIFIED="1393584311047" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/robotqc$robotqc.coverage" NAME="robotqc Coverage Results" MODIFIED="1394130651913" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
   </component>
   <component name="CreatePatchCommitExecutor">
     <option name="PATCH_PATH" value="" />
@@ -35,19 +31,19 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="views.py" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="views.py" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/kioskApp/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="642" column="61" selection-start="27538" selection-end="27538" vertical-scroll-proportion="0.0" vertical-offset="10419" max-vertical-offset="10846">
+            <state line="648" column="16" selection-start="27609" selection-end="27621" vertical-scroll-proportion="-0.43889844" vertical-offset="11016" max-vertical-offset="11849">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="graph.html" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="graph.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/kioskApp/templates/graph.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="57" column="2" selection-start="942" selection-end="942" vertical-scroll-proportion="0.25120774" vertical-offset="865" max-vertical-offset="1377">
+            <state line="16" column="19" selection-start="326" selection-end="326" vertical-scroll-proportion="0.0" vertical-offset="758" max-vertical-offset="1326">
               <folding />
             </state>
           </provider>
@@ -56,7 +52,7 @@
       <file leaf-file-name="urls.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/urls.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="34" column="34" selection-start="1870" selection-end="1885" vertical-scroll-proportion="0.0" vertical-offset="578" max-vertical-offset="884">
+            <state line="34" column="52" selection-start="1903" selection-end="1903" vertical-scroll-proportion="0.0" vertical-offset="578" max-vertical-offset="884">
               <folding />
             </state>
           </provider>
@@ -152,9 +148,9 @@
         <option value="$PROJECT_DIR$/Utils/ErrorParsers/errorsParser.py" />
         <option value="$PROJECT_DIR$/kioskApp/models.py" />
         <option value="$PROJECT_DIR$/kioskApp/templates/view_robot_errors_chart.html" />
+        <option value="$PROJECT_DIR$/kioskApp/templates/graph.html" />
         <option value="$PROJECT_DIR$/urls.py" />
         <option value="$PROJECT_DIR$/kioskApp/views.py" />
-        <option value="$PROJECT_DIR$/kioskApp/templates/graph.html" />
       </list>
     </option>
   </component>
@@ -188,6 +184,16 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="Scope">
+        <subPane subId="Project Files">
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -204,30 +210,6 @@
             <PATH_ELEMENT>
               <option name="myItemId" value="robotqc" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="robotqc" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="robotqc" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="kioskApp" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
-      <pane id="Scope">
-        <subPane subId="Project Files">
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
@@ -519,12 +501,16 @@
       <created>1393238818303</created>
       <updated>1393238818303</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="addeed DAG in HTML5">
+      <created>1393585417656</created>
+      <updated>1393585417656</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="0" width="1366" height="728" extended-state="0" />
-    <editor active="true" />
+    <frame x="0" y="0" width="1366" height="728" extended-state="1" />
+    <editor active="false" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
@@ -535,7 +521,7 @@
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.575" sideWeight="0.88988096" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.37741935" sideWeight="0.110119045" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.21451613" sideWeight="0.88988096" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.21451613" sideWeight="0.88988096" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Data Sources" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -562,12 +548,48 @@
       <TodoPanelSettings />
     </option>
     <MESSAGE value="addeed ErrorsParsers to parse errors from robot" />
-    <option name="LAST_COMMIT_MESSAGE" value="addeed ErrorsParsers to parse errors from robot" />
+    <MESSAGE value="addeed DAG in HTML5" />
+    <option name="LAST_COMMIT_MESSAGE" value="addeed DAG in HTML5" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/kioskApp/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="116" column="22" selection-start="5314" selection-end="5314" vertical-scroll-proportion="0.0" vertical-offset="1972" max-vertical-offset="2278">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Utils/parsers.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="6" column="0" selection-start="173" selection-end="173" vertical-scroll-proportion="0.0" vertical-offset="102" max-vertical-offset="1037">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Utils/ErrorParsers/errorsParser.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="120" column="106" selection-start="6333" selection-end="6341" vertical-scroll-proportion="0.0" vertical-offset="2040" max-vertical-offset="2380">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Utils/ErrorParsers/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="1" column="0" selection-start="21" selection-end="21" vertical-scroll-proportion="0.0" vertical-offset="17" max-vertical-offset="119">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/kioskApp/templates/uploadErrors.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="18" column="80" selection-start="678" selection-end="678" vertical-scroll-proportion="0.0" vertical-offset="306" max-vertical-offset="680">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/kioskApp/views.py">
       <provider selected="true" editor-type-id="text-editor">
         <state line="633" column="17" selection-start="27503" selection-end="27503" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="10999">
@@ -787,9 +809,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/kioskApp/templates/robotQCIndex.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="76" column="85" selection-start="3346" selection-end="3346" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0">
-          <folding />
-        </state>
+        <state line="76" column="85" selection-start="3346" selection-end="3346" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/kioskApp/templates/uploadErrors.html">
@@ -851,23 +871,23 @@
         <state line="27" column="0" selection-start="848" selection-end="848" vertical-scroll-proportion="-9.461538" vertical-offset="213" max-vertical-offset="1173" />
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/kioskApp/templates/graph.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="16" column="19" selection-start="326" selection-end="326" vertical-scroll-proportion="0.0" vertical-offset="758" max-vertical-offset="1326">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/urls.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="34" column="34" selection-start="1870" selection-end="1885" vertical-scroll-proportion="0.0" vertical-offset="260" max-vertical-offset="867">
+        <state line="34" column="52" selection-start="1903" selection-end="1903" vertical-scroll-proportion="0.0" vertical-offset="260" max-vertical-offset="867">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/kioskApp/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="642" column="61" selection-start="27538" selection-end="27538" vertical-scroll-proportion="0.0" vertical-offset="10419" max-vertical-offset="10846">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/kioskApp/templates/graph.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="57" column="2" selection-start="942" selection-end="942" vertical-scroll-proportion="0.25120774" vertical-offset="865" max-vertical-offset="1377">
+        <state line="648" column="16" selection-start="27609" selection-end="27621" vertical-scroll-proportion="-0.43889844" vertical-offset="11016" max-vertical-offset="11849">
           <folding />
         </state>
       </provider>

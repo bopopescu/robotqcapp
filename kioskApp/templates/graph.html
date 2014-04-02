@@ -53,14 +53,11 @@ function draw() {
   // States and transitions from RFC 793
   var g = new dagreD3.Digraph();
   {% autoescape off %}
-  var states = {{ vertex }};
+  var vertex = {{ vertex }};
   var edges = {{ edges }};
   {% endautoescape %}
-  states.forEach(function(state) { g.addNode(state, { label: state }); });
-  for(var i = 0; i < edges.length ; i++){
-      g.addEdge(null,edges[i][0],edges[i][1]);
-  }
-
+  vertex.forEach(function(vert) { g.addNode(vert, { label: vert }); });
+  edges.forEach(function(edge) { g.addEdge(null,edge[0],edge[1])});
 
 
   var renderer = new dagreD3.Renderer();

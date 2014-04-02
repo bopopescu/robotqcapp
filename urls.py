@@ -32,7 +32,7 @@ urlpatterns = patterns('',
     (r'^upload_robot_errors/$','kioskApp.views.uploadRobotErrors'),
     (r'^view_robot_errors/$','kioskApp.views.viewRobotErrorsChart'),
     (r'^view_graph/$','kioskApp.views.viewGraph'),
-    (r'^view_graph/miserables.json$','kioskApp.views.miserables'),
+    (r'^test_angular/$','kioskApp.views.test_angular'),
     ### Admin
     url(r'^admin/', include(admin.site.urls)),
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),

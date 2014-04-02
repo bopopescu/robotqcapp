@@ -643,6 +643,64 @@ def viewGraph(request):
     c = RequestContext(request,{'vertex':vertex,'edges':edges})
     return render_to_response('graph.html',c)
 
+
+
 @json_response
-def miserables(request):
-    return {}
+def test_angular(request):
+    return {
+  "-JHNbEfhdpBlZWS6fpyS" : {
+    "description" : "Ambitious web apps.",
+    "name" : "Ember",
+    "site" : "http://emberjs.com/"
+  },
+  "-JHNbEcMTQy8MY5L98oW" : {
+    "description" : "HTML enhanced for web apps!",
+    "name" : "AngularJS",
+    "site" : "http://angularjs.org"
+  },
+  "-JHNbEbH_LEksaQozSmz" : {
+    "description" : "Innovative web-apps.",
+    "name" : "SproutCore",
+    "site" : "http://sproutcore.com/"
+  },
+  "-JHNbEgWRvP6FmgmAZdf" : {
+    "description" : "Quick and beautiful.",
+    "name" : "Batman",
+    "site" : "http://batmanjs.org/"
+  },
+  "-JHNbEd7EujOCmy7hl23" : {
+    "description" : "Small with class.",
+    "name" : "Sammy",
+    "site" : "http://sammyjs.org/"
+  },
+  "-JHNbEeEOC64vuQFeY4c" : {
+    "description" : "Objective-J.",
+    "name" : "Cappucino",
+    "site" : "http://cappuccino.org/"
+  },
+  "-JHNbEdahDEeaH1blq2J" : {
+    "description" : "Awesome MVC Apps.",
+    "name" : "Spine",
+    "site" : "http://spinejs.com/"
+  },
+  "-JHNbEbiPtfyp8Kxpd7Z" : {
+    "description" : "Models for your apps.",
+    "name" : "Backbone",
+    "site" : "http://documentcloud.github.com/backbone/"
+  },
+  "-JHNbEbH_LEksaQozSmy" : {
+    "description" : "Write less, do more.",
+    "name" : "jQuery",
+    "site" : "http://jquery.com/"
+  },
+  "-JHNbEeHF3DPjBR41yJA" : {
+    "description" : "MVVM pattern.",
+    "name" : "Knockout",
+    "site" : "http://knockoutjs.com/"
+  },
+  "-JHNbEf7nHyn5WWguUmy" : {
+    "description" : "JS in Java.",
+    "name" : "GWT",
+    "site" : "https://developers.google.com/web-toolkit/"
+  }
+}
