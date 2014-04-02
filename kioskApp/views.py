@@ -474,7 +474,7 @@ def experimentpage(request, exp_id,comesFromNewExp=False):
     c.update(csrf(request))
     return render_to_response('experiment_page.html',c)
 
-#blah
+
 @csrf_exempt
 def new_user(request):
     is_valid = False
