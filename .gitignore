@@ -1,1 +1,10 @@
 xlwt/*
+dbindexer/*
+django/*
+djangoappengine/*
+djangotoolbox/*
+filetransfers/*
+spyne/*
+suds/*
+xlrd/*
+*.pyc
