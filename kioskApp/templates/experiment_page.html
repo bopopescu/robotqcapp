@@ -7,6 +7,8 @@
         #upper_center {height: 50%;}
         #lower_center {height: 50%;}
     </style>
+    <script type="text/javascript" src="http://canvg.googlecode.com/svn/trunk/rgbcolor.js"></script>
+    <script type="text/javascript" src="http://canvg.googlecode.com/svn/trunk/canvg.js"></script>
     <script type="text/javascript">
         dojo.require("dijit.form.Form");
         dojo.require("dijit.form.Select");
@@ -15,6 +17,32 @@
         dojo.require("dijit.form.DateTextBox");
         dojo.require("dijit.form.CheckBox");
         dojo.require("dijit.Dialog");
+        function downloadChart(chartId){
+            var chartDiv = document.getElementById(chartId);
+            var chartArea = chartDiv.children[0];
+            var svg = chartArea.innerHTML.substring(chartArea.innerHTML.indexOf("<svg"), chartArea.innerHTML.indexOf("</svg>") + 6);
+            var canvas = document.createElement('canvas');
+            canvas.setAttribute('width', chartArea.offsetWidth);
+            canvas.setAttribute('height', chartArea.offsetHeight);
+            canvas.setAttribute(
+            'style',
+            'position: absolute; ' +
+            'top: ' + (-chartArea.offsetHeight * 2) + 'px;' +
+            'left: ' + (-chartArea.offsetWidth * 2) + 'px;');
+             document.body.appendChild(canvas);
+            canvg(canvas, svg);
+            var imgData = canvas.toDataURL("image/png");
+            // Populate img tag
+             var img = document.createElement('img');
+             img.src = imgData;
+            var imageContainer =  document.getElementById('imageContainer');
+            while (imageContainer.firstChild) {
+               imageContainer.removeChild(imageContainer.firstChild);
+            }
+            imageContainer.appendChild(img);
+            // Download image
+            window.location = imgData.replace("image/png", "image/octet-stream");
+        }
         function downloadFiles(){
             var downloadExperimentFiles = dijit.byId("_downloadExperimentFiles");
             dojo.connect(downloadExperimentFiles, "onClick", function(event){
@@ -68,7 +96,7 @@
     </form>
     </p>
     {% endif %}
-    <button data-dojo-type="dijit.form.Button" type="button" id="button1"k>download experiment  files
+    <button data-dojo-type="dijit.form.Button" type="button" id="button1">download experiment  files
         <script type="dojo/connect" data-dojo-event="onClick"> window.location = "/experiments/download_exp_files/{{ exp_id }}"</script>
     </button>
     <p>
@@ -136,9 +164,18 @@
     <br>
     <br>
     <div id="chart_div" style="width: 900px; height: 500px;"></div>
+      <button data-dojo-type="dijit.form.Button" type="button" >download chart
+        <script type="dojo/connect" data-dojo-event="onClick"> downloadChart('chart_div')</script>
+    </button>
     <div id="scatter_chart_div" style="width: 900px; height: 500px;"></div>
+     <button data-dojo-type="dijit.form.Button" type="button" >download chart
+        <script type="dojo/connect" data-dojo-event="onClick"> downloadChart('scatter_chart_div')</script>
+    </button>
     <div id="line_chart_div" style="width: 900px; height: 500px;"></div>
-
+      <button data-dojo-type="dijit.form.Button" type="button" >download chart
+        <script type="dojo/connect" data-dojo-event="onClick"> downloadChart('line_chart_div')</script>
+    </button>
+    <div id="imageContainer"></div>
     {% if   is_valid  %}
         <p>your form has been successfully submitted</p>
     {% endif %}
